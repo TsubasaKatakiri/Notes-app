@@ -1,0 +1,48 @@
+.card{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #BBBBBB;
+    padding: 15px;
+    margin: 10px;
+    width: calc((100% / 4) - 20px);
+
+    &__header{
+        font-weight: 600;
+        font-size: 16pt;
+        margin-bottom: 5px;
+    }
+
+    &__text{
+        font-weight: 400;
+        margin-bottom: 5px;
+    }
+
+    &__tags{
+        display: flex;
+        flex-direction: row;
+        margin-bottom: 5px;
+    }
+
+    &__datetime{
+        color: #888888;
+    }
+
+    &__controls{
+        margin-top: 10px;
+    }
+
+    &__icon{
+        font-size: 16pt;
+        margin-right: 10px;
+        cursor: pointer;
+
+        &:hover{
+            color: #f12563;
+        }
+    }
+}
+
+.tag{
+    font-weight: 700;
+    margin-right: 5px;
+}
