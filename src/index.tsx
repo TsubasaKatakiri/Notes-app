@@ -1,17 +1,16 @@
-import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import { ModalState } from './context/ModalContext';
 import NotesProvider from './context/Notes/NotesContext';
+import { ModalsState } from './context/Modal/ModalContext';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <NotesProvider>
-    <ModalState>
+    <ModalsState>
       <App />
-    </ModalState>
+    </ModalsState>
   </NotesProvider>
 );

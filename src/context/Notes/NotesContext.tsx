@@ -1,9 +1,13 @@
 import React, { useState, createContext, ReactNode } from 'react';
 import { INote, NotesContextType } from '../../models';
+import { getNotes, writeNotes } from '../../util/notesFunctions';
 
-export const NotesContext = createContext<NotesContextType>(    {
+export const NotesContext = createContext<NotesContextType>({
     notes: [],
+    currentNote: null,
+    setNote: () => {},
     loadNotes: () => {},
+    filterNotes: () => {},
     addNote: () => {},
     editNote: () => {},
     deleteNote: () => {},
@@ -11,33 +15,51 @@ export const NotesContext = createContext<NotesContextType>(    {
 
 const NotesProvider = ({children} : {children: ReactNode}) => {
     const [notes, setNotes] = useState<INote[]>([]);
+    const [currentNote, setCurrentNote] = useState<INote | null>(null);
 
-    const loadNotes = () => {
+    const setNote = (note: INote | null) : void => {
+        setCurrentNote(note);
+    }
+
+    const loadNotes = () : void => {
         const noteData = localStorage.getItem('user-notes');
-        if(!noteData) localStorage.setItem('user-notes', JSON.stringify([]));
+        if(!noteData) writeNotes([]);
         else setNotes(JSON.parse(noteData));
     }
 
-    const addNote = (note : INote) => {
-        setNotes(prev => [...prev, note]);
+    const filterNotes = (tag : string) : void => {
+        const noteData = getNotes();
+        const filteredNotes = noteData.filter((note : INote) => note.tags?.includes(tag));
+        if(tag === '') setNotes(noteData);
+        else setNotes(filteredNotes);
     }
 
-    const editNote = (note : INote) => {
-        setNotes(prev => prev.map((item : INote) => {
+    const addNote = (note : INote) : void => {
+        const noteData = getNotes();
+        const newNoteData = noteData.concat(note);
+        writeNotes(newNoteData);
+        setNotes(newNoteData);
+    }
+
+    const editNote = (note : INote) : void => {
+        const noteData = getNotes();
+        const newNoteData = noteData.map((item : INote) => {
             if(item.id === note.id) return note;
             else return item;
-        }));
+        });
+        writeNotes(newNoteData);
+        setNotes(newNoteData);
     }
 
-    const deleteNote = (id : string) => {
-        const noteData = JSON.parse(localStorage.getItem('user-notes') || '');
+    const deleteNote = (id : string) : void => {
+        const noteData = getNotes();
         const newNoteData = noteData.filter((item : INote) => item.id !== id);
-        localStorage.setItem('user-notes', JSON.stringify(newNoteData));
+        writeNotes(newNoteData);
         setNotes(prev => prev.filter((note : INote) => note.id !== id));
     }
 
     return (
-        <NotesContext.Provider value={{notes, loadNotes, addNote, editNote, deleteNote}}>
+        <NotesContext.Provider value={{notes, currentNote, setNote, loadNotes, filterNotes, addNote, editNote, deleteNote}}>
             {children}
         </NotesContext.Provider>
     )

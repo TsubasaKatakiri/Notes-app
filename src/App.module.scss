@@ -4,3 +4,35 @@
     align-items: flex-start;
     justify-content: flex-start;
 }
+
+.content{
+    margin-top: 10px;
+    border-top: 1px solid #BBBBBB;
+
+    &__caption{
+        margin-bottom: 10px;
+        padding: 10px 0;
+        border-bottom: 1px solid #BBBBBB;
+    }
+
+    &__buttons{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+}
+
+.button{
+    padding: 10px 20px;
+    background-color: #FFFFFF;
+    color: #333333;
+    border: 1px solid #BBBBBB;
+    cursor: pointer;
+    margin-right: 10px;
+
+    &:hover{
+        border: 1px solid #f12563;
+        background-color: #f12563;
+        color: #FFFFFF;
+    }
+}

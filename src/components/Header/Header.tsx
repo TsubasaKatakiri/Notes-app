@@ -1,17 +1,18 @@
 import React, {useContext} from 'react';
-import { ModalContext } from '../../context/ModalContext';
+import { ModalsContext } from '../../context/Modal/ModalContext';
 import { NotesContext } from '../../context/Notes/NotesContext';
 import { INote } from '../../models';
 import Modal from '../Modal/Modal';
 import NoteForm from '../NoteForm/NoteForm';
+import Search from '../Search/Search';
 import classes from './Header.module.scss';
 
 const Header = () => {
-    const {modal, open, close} = useContext(ModalContext);
+    const {modalCreate, openCreate, closeCreate} = useContext(ModalsContext);
     const {addNote} = useContext(NotesContext);
 
-    const createHandler = (note: INote) => {
-        close();
+    const createHandler = (note: INote) : void => {
+        closeCreate();
         console.log(note);
         addNote(note);
     }
@@ -19,9 +20,10 @@ const Header = () => {
     return (
         <div className={classes.header}>
             <h1 className={classes.header__logo}>Notes App</h1>
-            <button className={classes.header__button} onClick={() => open()}>Add Note</button>
-            {modal && 
-                <Modal onClose={() => close()} title={'Create New Note'}>
+            <Search/>
+            <button className={classes.header__button} onClick={() => openCreate()}>Add Note</button>
+            {modalCreate && 
+                <Modal onClose={() => closeCreate()} title={'Create New Note'}>
                     <NoteForm onCreate={createHandler}/>
                 </Modal>
             }

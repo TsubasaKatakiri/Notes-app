@@ -1,8 +1,9 @@
-import React, {FormEvent, ChangeEvent} from 'react';
+import {FormEvent, ChangeEvent} from 'react';
 import { INote } from '../../models';
 import classes from './NoteForm.module.scss';
 import { useState } from 'react';
 import uuid from 'react-uuid';
+import { extractTags } from '../../util/textFunctions';
 
 const NoteData : INote = {
     id: '',
@@ -14,17 +15,16 @@ const NoteData : INote = {
 
 interface NoteFormProps{
     onCreate?: (note: INote) => void;
-    onSaveEdit?: (note: INote) => void;
 }
 
-const NoteForm = ({onCreate, onSaveEdit} : NoteFormProps) => {
-    const [title, setTitle] = useState('');
-    const [text, setText] = useState('');
-    const [tags, setTags] = useState([]);
+const NoteForm = ({ onCreate } : NoteFormProps) => {
+    const [title, setTitle] = useState<string>('');
+    const [text, setText] = useState<string>('');
+    const [tags, setTags] = useState<string>('');
 
     const [textError, setTextError] = useState('');
 
-    const submitHandler = (e: FormEvent) => {
+    const submitHandler = (e: FormEvent) : void => {
         e.preventDefault();
         setTextError('');
         if(text.trim().length === 0){
@@ -34,29 +34,22 @@ const NoteForm = ({onCreate, onSaveEdit} : NoteFormProps) => {
         NoteData.id = uuid();
         NoteData.header = title;
         NoteData.text = text;
-        NoteData.tags = tags;
-        console.log(NoteData);
-        const notes = JSON.parse(localStorage.getItem('user-notes') || '');
-        notes.push(NoteData);
-        localStorage.setItem('user-notes', JSON.stringify(notes));
+        NoteData.tags = tags.split(' ');
         if(onCreate) onCreate(NoteData);
     }
 
     const textInputHandler = (e: ChangeEvent<HTMLInputElement> | any) => {
         const textString = e.target.value;
-        const tags = textString.split(' ')
-                               .filter((word : string) => word.startsWith('#'))
-                               .map((tag : string) => tag.replace(/[^a-zA-Z# ]/g, ""));
+        setTags(extractTags(textString));
         setText(textString);
-        setTags(tags);
     }
 
     return (
         <form className={classes.form} onSubmit={submitHandler}>
-            <input type="text" className={classes.form__input} placeholder={"Note Title"} value={title} onChange={e => setTitle(e.target.value)}/>
-            <textarea value={text} className={classes.form__textarea} onChange={textInputHandler} placeholder="Note Text"></textarea>
+            <input type='text' className={classes.form__input} placeholder={'Note Title'} value={title} onChange={e => setTitle(e.target.value)}/>
+            <textarea value={text} className={classes.form__textarea} onChange={textInputHandler} placeholder='Note Text'></textarea>
             {textError && <span className={classes.form__error}>{textError}</span>}
-            <input type="text" disabled className={classes.form__input} placeholder={"Note Tags"} value={tags}/>
+            <input type='text' disabled className={classes.form__input} placeholder={'Note Tags'} value={tags}/>
             <button className={classes.form__button}>Save Note</button>
         </form>
     );
