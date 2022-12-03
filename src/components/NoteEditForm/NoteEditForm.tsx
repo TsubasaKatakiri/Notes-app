@@ -1,9 +1,8 @@
-import React, { ChangeEvent, FormEvent, useRef, useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import { INote } from '../../models';
 import classes from './NoteEditForm.module.scss';
 import './highlightTextAssist.css';
 import parse from 'html-react-parser';
-import ContentEditable from 'react-contenteditable'
 import { extractTags, inlineTags } from '../../util/textFunctions';
 
 interface NoteEditProps{
@@ -12,9 +11,9 @@ interface NoteEditProps{
 }
 
 const NoteEditForm = ({note, onSaveEdit} : NoteEditProps) => {
-    const [title, setTitle] = useState<string | undefined>(note?.header);
+    const [title, setTitle] = useState<string | undefined>(note.header);
     const [text, setText] = useState<string>(note.text);
-    const [underlayText, setUnderlayText] = useState<string>(textProcessing(note.text))
+    const [underlayText, setUnderlayText] = useState<string>(textProcessing(note.text));
     const [tags, setTags] = useState<string>(note.tags ? inlineTags(note.tags) : '');
 
     const [textError, setTextError] = useState<string>('');

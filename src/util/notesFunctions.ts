@@ -1,4 +1,4 @@
-import { INote } from "../models";
+import { INote } from '../models';
 
 export const getNotes = () => {
     return JSON.parse(localStorage.getItem('user-notes') || '');

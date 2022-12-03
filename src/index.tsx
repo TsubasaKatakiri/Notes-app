@@ -8,9 +8,9 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
-  <NotesProvider>
-    <ModalsState>
-      <App />
-    </ModalsState>
-  </NotesProvider>
+    <NotesProvider>
+        <ModalsState>
+            <App />
+        </ModalsState>
+    </NotesProvider>
 );

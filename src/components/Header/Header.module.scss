@@ -1,11 +1,13 @@
+@import '../../colors.scss';
+
 .header{
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 10px 30px;
-    color: #333333;
-    border-bottom: 1px solid #BBBBBB;
+    color: $button-color;
+    border-bottom: 1px solid $border-color;
 
     &__logo{
         font-size: 18pt;
@@ -14,15 +16,15 @@
 
     &__button{
         padding: 10px 20px;
-        background-color: #FFFFFF;
-        color: #333333;
-        border: 1px solid #BBBBBB;
+        background-color: $background-color;
+        color: $button-color;
+        border: 1px solid $border-color;
         cursor: pointer;
 
         &:hover{
-            border: 1px solid #f12563;
-            background-color: #f12563;
-            color: #FFFFFF;
+            border: 1px solid $accent;
+            background-color: $accent;
+            color: $background-color;
         }
     }
 }

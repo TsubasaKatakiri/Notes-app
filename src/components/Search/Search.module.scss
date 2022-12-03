@@ -1,6 +1,8 @@
+@import '../../colors.scss';
+
 .searchbox{
-    width: 400px;
-    border: 1px solid #BBBBBB;
+    width: 60%;
+    border: 1px solid $border-color;
     font-size: 12pt;
     padding: 10px 20px;
     outline: 0;

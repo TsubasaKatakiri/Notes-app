@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useContext, useState } from 'react';
+import { ChangeEvent, useContext, useState } from 'react';
 import { NotesContext } from '../../context/Notes/NotesContext';
 import classes from './Search.module.scss';
 
