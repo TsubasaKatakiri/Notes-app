@@ -14,14 +14,43 @@
         outline: 0;
     }
 
-    &__textarea{
+    &__highlightableTextarea{
         width: 100%;
         height: 200px;
+        position: relative;
+    }
+
+    &__textarea{
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
         resize: none;
         border: 1px solid #BBBBBB;
+        background-color: transparent;
         padding: 10px 20px;
         font-size: 12pt;
         outline: 0;
+        font-family: 'Arial', sans-serif;
+        font-weight: 400;
+        font-size: 13pt;
+        color: transparent;
+        caret-color: #000000;
+    }
+
+    &__highlightLayer{
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 0;
+        width: 100%;
+        height: 100%;
+        padding: 11px 21px;
+        font-family: 'Arial', sans-serif;
+        font-weight: 400;
+        font-size: 13pt;
     }
 
     &__error{
@@ -45,6 +74,5 @@
 }
 
 .highlightedText{
-    font-weight: 700;
     color: #f12563;
 }
